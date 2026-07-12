@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this educational repository, please cite it as below."
+title: "Non-Convex and Multi-Objective Neural Optimization"
+type: software
+authors:
+  - family-names: Purohit
+    given-names: Rohan
+year: 2026
+license: MIT
+repository-code: "https://github.com/rohanpurohit7/multi-objective-neural-optimization"
+
