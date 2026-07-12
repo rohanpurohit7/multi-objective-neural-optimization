@@ -45,20 +45,46 @@ def main() -> None:
     colors = {"Sequence only": "#4C78A8", "Vector augmented": "#F58518"}
     curves = {name: curve(labels, score) for name, score in models.items()}
 
-    fig, axes = plt.subplots(1, 3, figsize=(17, 5))
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6.5))
     for name, rows in curves.items():
         axes[0].plot(rows[:, 0], rows[:, 1], lw=2.4, color=colors[name], label=name)
         axes[1].plot(rows[:, 0], 1 - rows[:, 1], lw=2.4, color=colors[name],
                      label=f"{name} (AUC={rank_auc(labels, models[name]):.3f})")
         axes[2].plot(rows[:, 2], rows[:, 1], lw=2.4, color=colors[name], label=name)
+    # Shade the incremental assurance region on a common x-grid.
+    common = np.linspace(.02, .98, 240)
+    seq = curves["Sequence only"]
+    vec = curves["Vector augmented"]
+    for ax, x_col, y_transform in [
+        (axes[0], 0, lambda rows: rows[:, 1]),
+        (axes[1], 0, lambda rows: 1 - rows[:, 1]),
+        (axes[2], 2, lambda rows: rows[:, 1]),
+    ]:
+        s_order = np.argsort(seq[:, x_col]); v_order = np.argsort(vec[:, x_col])
+        s_y = np.interp(common, seq[s_order, x_col], y_transform(seq)[s_order])
+        v_y = np.interp(common, vec[v_order, x_col], y_transform(vec)[v_order])
+        ax.fill_between(common, s_y, v_y, color="#72B7B2", alpha=.28,
+                        label="Incremental assurance area")
     axes[0].set(title="Pareto operating frontier", xlabel="False-positive rate", ylabel="Miss rate")
     axes[1].plot([0, 1], [0, 1], "--", color="gray", alpha=.6)
     axes[1].set(title="Detection quality", xlabel="False-positive rate", ylabel="True-positive rate")
     axes[2].set(title="Security versus SOC workload", xlabel="Alert rate", ylabel="Miss rate")
+    business_lines = [
+        "Area = fewer missed attacks at the same enforcement friction;\n"
+        "value is added risk assurance, not automatic cash savings.",
+        "Area = additional detection confidence for the same false-alarm cost;\n"
+        "it represents better decision quality under uncertainty.",
+        "Area = residual risk avoided at the same analyst investment;\n"
+        "the benefit may justify spend even without reducing the budget.",
+    ]
     for ax in axes:
         ax.grid(alpha=.22); ax.legend(fontsize=8)
+    for ax, line in zip(axes, business_lines):
+        ax.text(.5, -.25, line, transform=ax.transAxes, ha="center", va="top",
+                fontsize=8.5, color="#263238",
+                bbox=dict(boxstyle="round,pad=.35", facecolor="#F3F6F8", edgecolor="#B0BEC5"))
     fig.suptitle("Vector context changes the attainable cybersecurity trade-off", fontsize=15, fontweight="bold")
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, .10, 1, .94))
     root = Path(__file__).resolve().parents[1] / "artifacts"
     root.mkdir(exist_ok=True)
     first = root / "cybersecurity_operating_tradeoffs.svg"
@@ -96,4 +122,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
