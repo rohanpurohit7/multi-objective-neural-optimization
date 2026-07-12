@@ -179,6 +179,16 @@ Regenerate the figure with:
 python experiments/confidence_tradeoff_hyperplane.py
 ```
 
+### Policy, economics, and defense in depth
+
+The model frontier becomes an organizational decision only after policy and investment priorities are applied. See [`docs/03-policy-economics-defense-in-depth.md`](docs/03-policy-economics-defense-in-depth.md) for the full treatment of:
+
+- permissive, risk-adaptive, and strict enforcement policies;
+- expected-loss reduction versus total control lifecycle cost;
+- why security strength includes prevention, detection, containment, recovery, and learning;
+- marginal returns, correlated control failures, and defense-in-depth diversification;
+- how mission, regulation, analyst capacity, and threat conditions move the preferred hyperplane.
+
 ### What to observe
 
 1. The parameter landscape contains oscillations and multiple local basins.
@@ -200,7 +210,8 @@ python experiments/confidence_tradeoff_hyperplane.py
 ├── README.md
 ├── docs/
 │   ├── 01-foundations.md
-│   └── 02-model-evolution.md
+│   ├── 02-model-evolution.md
+│   └── 03-policy-economics-defense-in-depth.md
 ├── experiments/
 │   ├── confidence_tradeoff_hyperplane.py
 │   └── pareto_landscape.py
