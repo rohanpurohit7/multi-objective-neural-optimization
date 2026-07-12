@@ -54,12 +54,11 @@ def main() -> None:
 
     fig.suptitle("One optimum becomes a frontier when objectives conflict", fontsize=15)
     fig.tight_layout()
-    output = Path(__file__).resolve().parents[1] / "artifacts" / "pareto_landscape.png"
+    output = Path(__file__).resolve().parents[1] / "artifacts" / "pareto_landscape.svg"
     output.parent.mkdir(exist_ok=True)
-    fig.savefig(output, dpi=180, bbox_inches="tight")
+    fig.savefig(output, format="svg", bbox_inches="tight")
     print(f"Wrote {output}")
 
 
 if __name__ == "__main__":
     main()
-
