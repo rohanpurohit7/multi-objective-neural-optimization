@@ -161,6 +161,24 @@ With the fixed seed and 5,000 synthetic authentication sessions, the lab finds:
 
 The bootstrapped AUC improvement is **+0.152** with a 95% confidence interval of **[+0.133, +0.170]**. Because the interval excludes zero and the miss rate falls at the same analyst workload, the controlled experiment supports the hypothesis that relevant vector context improves the attainable detection trade-off. These results demonstrate the mechanism on synthetic data; they are not a production-performance claim.
 
+### Non-convexity, hyperplanes, and confidence
+
+![Non-convex landscape, Pareto hyperplanes, and preference-conditioned confidence](artifacts/confidence_tradeoff_hyperplane.svg)
+
+This visualization prevents an important overclaim:
+
+- the **non-convex landscape** permits several locally attractive parameter regions;
+- a **solution hyperplane** represents stakeholder preferences, not objective truth;
+- changing the weight placed on missed attacks versus false positives changes which solution minimizes weighted loss;
+- confidence intervals can overlap, so evidence may support a trade-off region without proving one architecture universally superior;
+- the appropriate conclusion is conditional: *given these objectives, preferences, data, and uncertainty, this operating point is supported*.
+
+Regenerate the figure with:
+
+```bash
+python experiments/confidence_tradeoff_hyperplane.py
+```
+
 ### What to observe
 
 1. The parameter landscape contains oscillations and multiple local basins.
@@ -184,6 +202,7 @@ The bootstrapped AUC improvement is **+0.152** with a 95% confidence interval of
 │   ├── 01-foundations.md
 │   └── 02-model-evolution.md
 ├── experiments/
+│   ├── confidence_tradeoff_hyperplane.py
 │   └── pareto_landscape.py
 ├── notebooks/
 │   └── cybersecurity_pareto_lab.ipynb
