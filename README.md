@@ -135,7 +135,9 @@ pip install -r requirements.txt
 python experiments/pareto_landscape.py
 ```
 
-Output is written to `artifacts/pareto_landscape.png`.
+Output is written to `artifacts/pareto_landscape.svg`.
+
+![Non-convex Pareto landscape](artifacts/pareto_landscape.svg)
 
 ### Cybersecurity industry lab
 
@@ -161,6 +163,10 @@ With the fixed seed and 5,000 synthetic authentication sessions, the lab finds:
 
 The bootstrapped AUC improvement is **+0.152** with a 95% confidence interval of **[+0.133, +0.170]**. Because the interval excludes zero and the miss rate falls at the same analyst workload, the controlled experiment supports the hypothesis that relevant vector context improves the attainable detection trade-off. These results demonstrate the mechanism on synthetic data; they are not a production-performance claim.
 
+![Cybersecurity Pareto, ROC, and SOC workload trade-offs](artifacts/cybersecurity_operating_tradeoffs.svg)
+
+![Bootstrap confidence and fixed alert-budget comparison](artifacts/cybersecurity_confidence.svg)
+
 ### Non-convexity, hyperplanes, and confidence
 
 ![Non-convex landscape, Pareto hyperplanes, and preference-conditioned confidence](artifacts/confidence_tradeoff_hyperplane.svg)
@@ -180,6 +186,8 @@ python experiments/confidence_tradeoff_hyperplane.py
 ```
 
 ### Policy, economics, and defense in depth
+
+![Overall cybersecurity optimization and governance map](artifacts/overall_cybersecurity_decision_map.svg)
 
 The model frontier becomes an organizational decision only after policy and investment priorities are applied. See [`docs/03-policy-economics-defense-in-depth.md`](docs/03-policy-economics-defense-in-depth.md) for the full treatment of:
 
