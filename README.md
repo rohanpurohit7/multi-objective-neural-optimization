@@ -165,6 +165,14 @@ The bootstrapped AUC improvement is **+0.152** with a 95% confidence interval of
 
 ![Cybersecurity Pareto, ROC, and SOC workload trade-offs](artifacts/cybersecurity_operating_tradeoffs.svg)
 
+Business interpretation of the shaded area between the top curves:
+
+| Chart | What the area means |
+|---|---|
+| Pareto operating frontier | Fewer missed attacks at the same enforcement friction. The value is incremental risk assurance, not guaranteed cash savings. |
+| Detection quality | Additional detection confidence for the same false-alarm cost. It represents better decision quality under uncertainty. |
+| Security versus SOC workload | Residual risk avoided at the same analyst investment. The improvement may justify spending even when it does not reduce the security budget. |
+
 ![Bootstrap confidence and fixed alert-budget comparison](artifacts/cybersecurity_confidence.svg)
 
 ### Non-convexity, hyperplanes, and confidence
