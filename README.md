@@ -24,6 +24,109 @@ flowchart TD
 
 The central claim is deliberately precise: **newer architectures do not make the objective convex**. They improve the representation, conditioning, search policy, and evidence available while the training landscape generally remains non-convex.
 
+## Research framing: neural cyber governance and the cost-efficient security frontier
+
+This repository can also be interpreted as a computational framework for studying **neural-network-assisted cyber governance under economic and operational constraints**. The research question is not simply whether a neural architecture can improve classification accuracy. A more consequential question is whether richer learned representations can improve the *attainable set of cybersecurity governance decisions* when an organization must simultaneously manage residual risk, control cost, operational friction, compliance obligations, analyst capacity, and mission requirements.
+
+Under this interpretation, cybersecurity governance is modeled as a multi-objective decision problem. Let an organizational cyber state be represented by a high-dimensional set of observations:
+
+```text
+X = {threat, vulnerability, asset, identity, control,
+     cost, compliance, mission, operations}
+```
+
+A neural architecture learns a representation of this state and produces risk estimates or candidate decisions:
+
+```text
+X -> learned cyber-risk representation -> candidate controls or policies
+```
+
+Sequential models may encode temporal attack behavior; Transformers may capture long-range interactions among events and controls; multimodal models may integrate telemetry, text, diagrams, and structured evidence; and vector-augmented systems may retrieve current organizational or threat knowledge. These architectures therefore expand the information available to the decision process. They do not, however, eliminate the underlying conflict among governance objectives.
+
+A cyber governance problem can be expressed as minimizing a vector of competing objectives:
+
+```text
+min_theta [ResidualRisk(theta),
+           ControlCost(theta),
+           OperationalFriction(theta),
+           ComplianceGap(theta)]
+```
+
+while simultaneously seeking improvements in properties such as detection, prevention, resilience, containment, and recovery. In general, no single control configuration optimizes every dimension. The relevant mathematical object is therefore a **Pareto-efficient cyber frontier**: a set of security postures for which improvement in one objective requires deterioration in at least one other objective.
+
+This creates a direct analogy to the efficient frontier in portfolio theory. In a financial portfolio, an efficient frontier describes non-dominated combinations of risk and expected return. In cybersecurity governance, the analogous frontier describes non-dominated combinations of **security assurance, residual risk, lifecycle cost, and operational burden**. The analogy is conceptual rather than identical: cyber risk is adversarial, partially observable, non-stationary, and difficult to price, so the objectives generally extend beyond a two-dimensional risk-return model.
+
+The term **cost-driven cyber dimensionality** is used here to describe the fact that security investment propagates across several interacting dimensions rather than along a single cost axis. An additional control may increase direct expenditure while changing implementation complexity, SOC workload, user friction, attack-surface exposure, detection capability, expected loss, and regulatory assurance. Consequently, the mapping from security expenditure to security outcome is generally nonlinear and may be non-convex.
+
+```text
+Cyber investment
+    -> control lifecycle cost
+    -> implementation complexity
+    -> SOC / analyst workload
+    -> user and business friction
+    -> attack-surface reduction
+    -> detection and prevention capability
+    -> expected-loss reduction
+    -> regulatory and mission assurance
+```
+
+This distinction is important for interpreting the frontier. Movement toward a higher-assurance operating region does not necessarily produce direct cash savings. The economic value may instead appear as **incremental risk assurance**: a reduction in residual exposure or an improvement in decision confidence obtained for a given level of organizational resources. The shaded regions in the cybersecurity experiments in this repository should therefore be interpreted as changes in attainable risk assurance and decision quality, not as guaranteed financial returns.
+
+The neural model and the Pareto optimizer also serve different functions from the governance layer. The neural model estimates or represents the cyber state. The multi-objective optimizer identifies efficient alternatives. **Governance determines which efficient alternative is acceptable.** A simplified preference-conditioned governance objective can be represented as:
+
+```text
+argmin_theta [w_r * ResidualRisk(theta)
+            + w_c * ControlCost(theta)
+            + w_o * OperationalBurden(theta)
+            + w_f * BusinessFriction(theta)]
+```
+
+The weights are not intrinsic properties of the neural network. They represent organizational preferences determined by risk appetite, regulation, mission criticality, threat conditions, budget constraints, and available operational capacity. Two organizations using the same underlying risk model may therefore rationally select different points on the same Pareto frontier.
+
+This motivates the interpretation of the **solution hyperplane** used in this repository. The hyperplane is not intended to establish a universally optimal security configuration. It represents a governance preference structure imposed on the attainable solution space. Changing policy priorities effectively changes the orientation of this preference surface and can move the selected operating point to a different region of the Pareto frontier.
+
+The resulting conceptual architecture is:
+
+```text
+Cyber environment and telemetry
+        |
+        v
+Neural / Transformer / multimodal representation
+        |
+        v
+Learned high-dimensional cyber-risk state
+        |
+        v
+Candidate controls, thresholds, or policies
+        |
+        v
+Multi-objective optimization
+        |
+        v
+Non-convex Pareto solution space
+        |
+        v
+Cyber cost-efficient frontier
+        |
+        v
+Governance preference model
+(risk appetite + regulation + mission + budget)
+        |
+        v
+Selected cybersecurity operating posture
+        |
+        v
+Monitoring, feedback, and frontier re-estimation
+```
+
+The cybersecurity laboratory provides a controlled example of this mechanism. Sequence-only and vector-augmented risk models are not evaluated solely by predictive accuracy. They are evaluated by how they alter the attainable trade-off among missed attacks, false positives, complexity, and analyst workload. If additional contextual representation reduces missed attacks at a fixed alert budget, the principal governance result is not merely that one classifier has a higher AUC. The more significant result is that the **attainable cyber decision frontier has shifted**, potentially giving decision-makers a superior set of feasible operating choices under the same resource constraint.
+
+This leads to the broader research hypothesis explored by the repository:
+
+> **Neural architectures can improve cybersecurity governance by increasing the fidelity of high-dimensional risk representations and thereby shifting or clarifying the attainable Pareto frontier; multi-objective optimization can identify economically and operationally efficient security postures within that frontier; governance mechanisms must then select among those postures according to explicit organizational preferences and constraints.**
+
+The framework therefore does not assume that artificial intelligence can determine how much cybersecurity is objectively “enough.” Instead, it separates three research problems: **representation**, in which neural systems estimate a complex and changing cyber state; **optimization**, in which Pareto methods characterize non-dominated security trade-offs; and **governance**, in which accountable decision-makers determine which trade-off is acceptable. A natural extension of this work is an N-dimensional cyber governance frontier incorporating residual risk, lifecycle cost, control effectiveness, regulatory compliance, operational friction, SOC workload, resilience, and epistemic uncertainty, with the frontier continuously re-estimated as threat and organizational conditions change.
+
 ## Core formulation
 
 For parameters `theta` and `m` competing losses:
