@@ -43,6 +43,19 @@ X -> learned cyber-risk representation -> candidate controls or policies
 
 Sequential models may encode temporal attack behavior; Transformers may capture long-range interactions among events and controls; multimodal models may integrate telemetry, text, diagrams, and structured evidence; and vector-augmented systems may retrieve current organizational or threat knowledge. These architectures therefore expand the information available to the decision process. They do not, however, eliminate the underlying conflict among governance objectives.
 
+```mermaid
+flowchart LR
+    A["Threat intelligence"] --> H["Neural cyber-risk representation"]
+    B["Vulnerabilities"] --> H
+    C["Asset criticality"] --> H
+    D["Identity and behavior"] --> H
+    E["Control evidence"] --> H
+    F["Compliance and policy"] --> H
+    G["Cost and operations"] --> H
+    H --> I["Latent risk state Z"]
+    I --> J["Candidate controls and policies"]
+```
+
 A cyber governance problem can be expressed as minimizing a vector of competing objectives:
 
 ```text
@@ -56,6 +69,22 @@ while simultaneously seeking improvements in properties such as detection, preve
 
 This creates a direct analogy to the efficient frontier in portfolio theory. In a financial portfolio, an efficient frontier describes non-dominated combinations of risk and expected return. In cybersecurity governance, the analogous frontier describes non-dominated combinations of **security assurance, residual risk, lifecycle cost, and operational burden**. The analogy is conceptual rather than identical: cyber risk is adversarial, partially observable, non-stationary, and difficult to price, so the objectives generally extend beyond a two-dimensional risk-return model.
 
+```mermaid
+flowchart LR
+    A["Candidate security architectures"] --> B["Residual risk"]
+    A --> C["Lifecycle cost"]
+    A --> D["Operational friction"]
+    A --> E["Compliance gap"]
+    A --> F["SOC workload"]
+    B --> G["Multi-objective evaluator"]
+    C --> G
+    D --> G
+    E --> G
+    F --> G
+    G --> H["Non-dominated solutions"]
+    H --> I["Cyber efficient frontier"]
+```
+
 The term **cost-driven cyber dimensionality** is used here to describe the fact that security investment propagates across several interacting dimensions rather than along a single cost axis. An additional control may increase direct expenditure while changing implementation complexity, SOC workload, user friction, attack-surface exposure, detection capability, expected loss, and regulatory assurance. Consequently, the mapping from security expenditure to security outcome is generally nonlinear and may be non-convex.
 
 ```text
@@ -68,6 +97,19 @@ Cyber investment
     -> detection and prevention capability
     -> expected-loss reduction
     -> regulatory and mission assurance
+```
+
+```mermaid
+flowchart TD
+    A["Incremental cyber investment"] --> B["Control lifecycle cost"]
+    A --> C["Implementation complexity"]
+    A --> D["SOC workload"]
+    A --> E["User friction"]
+    A --> F["Attack-surface reduction"]
+    A --> G["Detection improvement"]
+    A --> H["Expected-loss reduction"]
+    A --> I["Regulatory assurance"]
+    A --> J["Resilience and recovery"]
 ```
 
 This distinction is important for interpreting the frontier. Movement toward a higher-assurance operating region does not necessarily produce direct cash savings. The economic value may instead appear as **incremental risk assurance**: a reduction in residual exposure or an improvement in decision confidence obtained for a given level of organizational resources. The shaded regions in the cybersecurity experiments in this repository should therefore be interpreted as changes in attainable risk assurance and decision quality, not as guaranteed financial returns.
@@ -85,38 +127,36 @@ The weights are not intrinsic properties of the neural network. They represent o
 
 This motivates the interpretation of the **solution hyperplane** used in this repository. The hyperplane is not intended to establish a universally optimal security configuration. It represents a governance preference structure imposed on the attainable solution space. Changing policy priorities effectively changes the orientation of this preference surface and can move the selected operating point to a different region of the Pareto frontier.
 
+```mermaid
+flowchart TD
+    A["Cyber efficient frontier"] --> G["Governance preference hyperplane"]
+    B["Risk appetite"] --> G
+    C["Mission criticality"] --> G
+    D["Regulation and policy"] --> G
+    E["Budget constraints"] --> G
+    F["Analyst and operational capacity"] --> G
+    G --> H["Selected operating region"]
+    H --> I["Cybersecurity posture"]
+```
+
 The resulting conceptual architecture is:
 
-```text
-Cyber environment and telemetry
-        |
-        v
-Neural / Transformer / multimodal representation
-        |
-        v
-Learned high-dimensional cyber-risk state
-        |
-        v
-Candidate controls, thresholds, or policies
-        |
-        v
-Multi-objective optimization
-        |
-        v
-Non-convex Pareto solution space
-        |
-        v
-Cyber cost-efficient frontier
-        |
-        v
-Governance preference model
-(risk appetite + regulation + mission + budget)
-        |
-        v
-Selected cybersecurity operating posture
-        |
-        v
-Monitoring, feedback, and frontier re-estimation
+```mermaid
+flowchart TD
+    A["Cyber environment<br/>telemetry, assets, identities, threats"] --> B["Neural representation layer<br/>RNN / Transformer / multimodal / RAG"]
+    B --> C["Learned high-dimensional cyber-risk state"]
+    C --> D["Candidate controls, thresholds, and policies"]
+    D --> E["Multi-objective optimization"]
+    E --> F["Non-convex Pareto solution space"]
+    F --> G["Cyber cost-efficient frontier"]
+    H["Risk appetite"] --> L["Governance preference model"]
+    I["Regulation"] --> L
+    J["Mission"] --> L
+    K["Budget and capacity"] --> L
+    G --> L
+    L --> M["Selected cybersecurity operating posture"]
+    M --> N["Monitoring, feedback, and frontier re-estimation"]
+    N --> B
 ```
 
 The cybersecurity laboratory provides a controlled example of this mechanism. Sequence-only and vector-augmented risk models are not evaluated solely by predictive accuracy. They are evaluated by how they alter the attainable trade-off among missed attacks, false positives, complexity, and analyst workload. If additional contextual representation reduces missed attacks at a fixed alert budget, the principal governance result is not merely that one classifier has a higher AUC. The more significant result is that the **attainable cyber decision frontier has shifted**, potentially giving decision-makers a superior set of feasible operating choices under the same resource constraint.
@@ -126,6 +166,19 @@ This leads to the broader research hypothesis explored by the repository:
 > **Neural architectures can improve cybersecurity governance by increasing the fidelity of high-dimensional risk representations and thereby shifting or clarifying the attainable Pareto frontier; multi-objective optimization can identify economically and operationally efficient security postures within that frontier; governance mechanisms must then select among those postures according to explicit organizational preferences and constraints.**
 
 The framework therefore does not assume that artificial intelligence can determine how much cybersecurity is objectively “enough.” Instead, it separates three research problems: **representation**, in which neural systems estimate a complex and changing cyber state; **optimization**, in which Pareto methods characterize non-dominated security trade-offs; and **governance**, in which accountable decision-makers determine which trade-off is acceptable. A natural extension of this work is an N-dimensional cyber governance frontier incorporating residual risk, lifecycle cost, control effectiveness, regulatory compliance, operational friction, SOC workload, resilience, and epistemic uncertainty, with the frontier continuously re-estimated as threat and organizational conditions change.
+
+A compact interpretation is:
+
+```mermaid
+flowchart LR
+    A["Observe"] --> B["Learn risk state"]
+    B --> C["Generate alternatives"]
+    C --> D["Discover Pareto frontier"]
+    D --> E["Apply governance preferences"]
+    E --> F["Select operating point"]
+    F --> G["Monitor outcomes"]
+    G --> A
+```
 
 ## Core formulation
 
